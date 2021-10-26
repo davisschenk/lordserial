@@ -4,7 +4,7 @@ use serde::Serialize;
 use packet::RawField;
 use packet::Field;
 
-enum DataPacket {
+pub enum DataPacket {
     BASE(),
     DM(),
     ESTIMATION(),
@@ -15,7 +15,7 @@ enum DataPacket {
 }
 
 impl DataPacket {
-    fn new(packet: packet::Packet) -> Self {
+    pub fn new(packet: &packet::Packet) -> Self {
         match packet.header.descriptor {
             0x80 => Self::IMU(imu_data::ImuPacket::from_vec(&packet.payload.fields)),
             0x81 => Self::GNSS(gnss_data::GnssPacket::from_vec(&packet.payload.fields)),
