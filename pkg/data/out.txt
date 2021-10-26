@@ -1,0 +1,1729 @@
+#![feature(prelude_import)]
+#![allow(dead_code)]
+#[prelude_import]
+use std::prelude::rust_2018::*;
+#[macro_use]
+extern crate std;
+use derive_field::{FieldExtract, DataPacket};
+use serde::Serialize;
+use packet::RawField;
+use packet::Field;
+mod imu_data {
+    use super::*;
+    pub struct ImuPacket {
+        accelerometer: Option<ScaledAccelerometerVector>,
+        gyro: Option<ScaledGyroVector>,
+        magnetometer: Option<ScaledMagnetometerVector>,
+        pressure: Option<ScaledAmbientPressure>,
+        dtv: Option<DeltaThetaVector>,
+        dvv: Option<DeltaVelocityVector>,
+        orientation_matrix: Option<OrientationMatrix>,
+        quaternion: Option<Quaternion>,
+        euler_angles: Option<EulerAngles>,
+        north_vector: Option<StabilizedNorthVector>,
+        up_vector: Option<StabilizedUpVector>,
+        gps_correlation: Option<GpsCorrelationTimestamp>,
+    }
+    impl ImuPacket {
+        pub fn from_vec(fields: Vec<RawField>) {
+            for raw_field in fields {
+                match raw_field.descriptor {
+                    ScaledAccelerometerVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&ScaledAccelerometerVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    ScaledGyroVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&ScaledGyroVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    ScaledMagnetometerVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&ScaledMagnetometerVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    ScaledAmbientPressure::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&ScaledAmbientPressure::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    DeltaThetaVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&DeltaThetaVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    DeltaVelocityVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&DeltaVelocityVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    OrientationMatrix::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&OrientationMatrix::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    Quaternion::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&Quaternion::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    EulerAngles::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&EulerAngles::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    StabilizedNorthVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&StabilizedNorthVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    StabilizedUpVector::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&StabilizedUpVector::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    GpsCorrelationTimestamp::DATA_DESCRIPTOR => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["", "\n"],
+                            &match (&GpsCorrelationTimestamp::new(raw_field),) {
+                                (arg0,) => {
+                                    [::core::fmt::ArgumentV1::new(arg0, ::core::fmt::Debug::fmt)]
+                                }
+                            },
+                        ));
+                    }
+                    _ => {
+                        ::std::io::_print(::core::fmt::Arguments::new_v1(
+                            &["Not found\n"],
+                            &match () {
+                                () => [],
+                            },
+                        ));
+                    }
+                }
+            }
+        }
+    }
+    #[descriptor(0x80, 0x04)]
+    struct ScaledAccelerometerVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl ScaledAccelerometerVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(ScaledAccelerometerVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(ScaledAccelerometerVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(ScaledAccelerometerVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for ScaledAccelerometerVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for ScaledAccelerometerVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x04;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for ScaledAccelerometerVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                ScaledAccelerometerVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "ScaledAccelerometerVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for ScaledAccelerometerVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "ScaledAccelerometerVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x05)]
+    struct ScaledGyroVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl ScaledGyroVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(ScaledGyroVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(ScaledGyroVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(ScaledGyroVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for ScaledGyroVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for ScaledGyroVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x05;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for ScaledGyroVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                ScaledGyroVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "ScaledGyroVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for ScaledGyroVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "ScaledGyroVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x06)]
+    struct ScaledMagnetometerVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl ScaledMagnetometerVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(ScaledMagnetometerVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(ScaledMagnetometerVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(ScaledMagnetometerVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for ScaledMagnetometerVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for ScaledMagnetometerVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x06;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for ScaledMagnetometerVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                ScaledMagnetometerVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "ScaledMagnetometerVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for ScaledMagnetometerVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "ScaledMagnetometerVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x17)]
+    struct ScaledAmbientPressure {
+        ambient_pressure: f32,
+    }
+    impl ScaledAmbientPressure {
+        const OFFSETS: &'static [usize; 1usize] = &{
+            let sizes = [std::mem::size_of::<f32>()];
+            let mut out = [2; 1usize];
+            let mut index = 1;
+            while index < 1usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                ambient_pressure: field.extract::<f32>(ScaledAmbientPressure::OFFSETS[0usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for ScaledAmbientPressure {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for ScaledAmbientPressure {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x17;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for ScaledAmbientPressure {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                ScaledAmbientPressure {
+                    ambient_pressure: ref __self_0_0,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "ScaledAmbientPressure");
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "ambient_pressure",
+                        &&(*__self_0_0),
+                    );
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for ScaledAmbientPressure {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "ScaledAmbientPressure",
+                    false as usize + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "ambient_pressure",
+                    &self.ambient_pressure,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x07)]
+    struct DeltaThetaVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl DeltaThetaVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(DeltaThetaVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(DeltaThetaVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(DeltaThetaVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for DeltaThetaVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for DeltaThetaVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x07;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for DeltaThetaVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                DeltaThetaVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "DeltaThetaVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for DeltaThetaVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "DeltaThetaVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x08)]
+    struct DeltaVelocityVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl DeltaVelocityVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(DeltaVelocityVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(DeltaVelocityVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(DeltaVelocityVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for DeltaVelocityVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for DeltaVelocityVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x08;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for DeltaVelocityVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                DeltaVelocityVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "DeltaVelocityVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for DeltaVelocityVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "DeltaVelocityVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x09)]
+    struct OrientationMatrix {
+        m11: f32,
+        m12: f32,
+        m13: f32,
+        m21: f32,
+        m22: f32,
+        m23: f32,
+        m31: f32,
+        m32: f32,
+        m33: f32,
+    }
+    impl OrientationMatrix {
+        const OFFSETS: &'static [usize; 9usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 9usize];
+            let mut index = 1;
+            while index < 9usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                m11: field.extract::<f32>(OrientationMatrix::OFFSETS[0usize])?,
+                m12: field.extract::<f32>(OrientationMatrix::OFFSETS[1usize])?,
+                m13: field.extract::<f32>(OrientationMatrix::OFFSETS[2usize])?,
+                m21: field.extract::<f32>(OrientationMatrix::OFFSETS[3usize])?,
+                m22: field.extract::<f32>(OrientationMatrix::OFFSETS[4usize])?,
+                m23: field.extract::<f32>(OrientationMatrix::OFFSETS[5usize])?,
+                m31: field.extract::<f32>(OrientationMatrix::OFFSETS[6usize])?,
+                m32: field.extract::<f32>(OrientationMatrix::OFFSETS[7usize])?,
+                m33: field.extract::<f32>(OrientationMatrix::OFFSETS[8usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for OrientationMatrix {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for OrientationMatrix {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x09;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for OrientationMatrix {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                OrientationMatrix {
+                    m11: ref __self_0_0,
+                    m12: ref __self_0_1,
+                    m13: ref __self_0_2,
+                    m21: ref __self_0_3,
+                    m22: ref __self_0_4,
+                    m23: ref __self_0_5,
+                    m31: ref __self_0_6,
+                    m32: ref __self_0_7,
+                    m33: ref __self_0_8,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "OrientationMatrix");
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m11",
+                        &&(*__self_0_0),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m12",
+                        &&(*__self_0_1),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m13",
+                        &&(*__self_0_2),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m21",
+                        &&(*__self_0_3),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m22",
+                        &&(*__self_0_4),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m23",
+                        &&(*__self_0_5),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m31",
+                        &&(*__self_0_6),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m32",
+                        &&(*__self_0_7),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "m33",
+                        &&(*__self_0_8),
+                    );
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for OrientationMatrix {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "OrientationMatrix",
+                    false as usize + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m11",
+                    &self.m11,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m12",
+                    &self.m12,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m13",
+                    &self.m13,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m21",
+                    &self.m21,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m22",
+                    &self.m22,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m23",
+                    &self.m23,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m31",
+                    &self.m31,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m32",
+                    &self.m32,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "m33",
+                    &self.m33,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x0A)]
+    struct Quaternion {
+        q0: f32,
+        q1: f32,
+        q2: f32,
+        q3: f32,
+    }
+    impl Quaternion {
+        const OFFSETS: &'static [usize; 4usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 4usize];
+            let mut index = 1;
+            while index < 4usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                q0: field.extract::<f32>(Quaternion::OFFSETS[0usize])?,
+                q1: field.extract::<f32>(Quaternion::OFFSETS[1usize])?,
+                q2: field.extract::<f32>(Quaternion::OFFSETS[2usize])?,
+                q3: field.extract::<f32>(Quaternion::OFFSETS[3usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for Quaternion {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for Quaternion {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x0A;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for Quaternion {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                Quaternion {
+                    q0: ref __self_0_0,
+                    q1: ref __self_0_1,
+                    q2: ref __self_0_2,
+                    q3: ref __self_0_3,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "Quaternion");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "q0", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "q1", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "q2", &&(*__self_0_2));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "q3", &&(*__self_0_3));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for Quaternion {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "Quaternion",
+                    false as usize + 1 + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "q0",
+                    &self.q0,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "q1",
+                    &self.q1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "q2",
+                    &self.q2,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "q3",
+                    &self.q3,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x0C)]
+    struct EulerAngles {
+        roll: f32,
+        pitch: f32,
+        yaw: f32,
+    }
+    impl EulerAngles {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                roll: field.extract::<f32>(EulerAngles::OFFSETS[0usize])?,
+                pitch: field.extract::<f32>(EulerAngles::OFFSETS[1usize])?,
+                yaw: field.extract::<f32>(EulerAngles::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for EulerAngles {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for EulerAngles {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x0C;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for EulerAngles {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                EulerAngles {
+                    roll: ref __self_0_0,
+                    pitch: ref __self_0_1,
+                    yaw: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "EulerAngles");
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "roll",
+                        &&(*__self_0_0),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "pitch",
+                        &&(*__self_0_1),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "yaw",
+                        &&(*__self_0_2),
+                    );
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for EulerAngles {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "EulerAngles",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "roll",
+                    &self.roll,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "pitch",
+                    &self.pitch,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "yaw",
+                    &self.yaw,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x10)]
+    struct StabilizedNorthVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl StabilizedNorthVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(StabilizedNorthVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(StabilizedNorthVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(StabilizedNorthVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for StabilizedNorthVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for StabilizedNorthVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x10;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for StabilizedNorthVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                StabilizedNorthVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "StabilizedNorthVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for StabilizedNorthVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "StabilizedNorthVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x11)]
+    struct StabilizedUpVector {
+        x: f32,
+        y: f32,
+        z: f32,
+    }
+    impl StabilizedUpVector {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+                std::mem::size_of::<f32>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                x: field.extract::<f32>(StabilizedUpVector::OFFSETS[0usize])?,
+                y: field.extract::<f32>(StabilizedUpVector::OFFSETS[1usize])?,
+                z: field.extract::<f32>(StabilizedUpVector::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for StabilizedUpVector {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for StabilizedUpVector {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x11;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for StabilizedUpVector {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                StabilizedUpVector {
+                    x: ref __self_0_0,
+                    y: ref __self_0_1,
+                    z: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "StabilizedUpVector");
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "x", &&(*__self_0_0));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "y", &&(*__self_0_1));
+                    let _ =
+                        ::core::fmt::DebugStruct::field(debug_trait_builder, "z", &&(*__self_0_2));
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for StabilizedUpVector {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "StabilizedUpVector",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "x",
+                    &self.x,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "y",
+                    &self.y,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "z",
+                    &self.z,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+    #[descriptor(0x80, 0x12)]
+    struct GpsCorrelationTimestamp {
+        tow: f64,
+        week: u16,
+        flags: u16,
+    }
+    impl GpsCorrelationTimestamp {
+        const OFFSETS: &'static [usize; 3usize] = &{
+            let sizes = [
+                std::mem::size_of::<f64>(),
+                std::mem::size_of::<u16>(),
+                std::mem::size_of::<u16>(),
+            ];
+            let mut out = [2; 3usize];
+            let mut index = 1;
+            while index < 3usize {
+                out[index] = out[index - 1] + sizes[index - 1];
+                index += 1;
+            }
+            out
+        };
+        fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            Ok(Self {
+                tow: field.extract::<f64>(GpsCorrelationTimestamp::OFFSETS[0usize])?,
+                week: field.extract::<u16>(GpsCorrelationTimestamp::OFFSETS[1usize])?,
+                flags: field.extract::<u16>(GpsCorrelationTimestamp::OFFSETS[2usize])?,
+            })
+        }
+    }
+    impl std::convert::TryFrom<packet::RawField> for GpsCorrelationTimestamp {
+        type Error = anyhow::Error;
+        fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
+            Self::new(field)
+        }
+    }
+    impl packet::Field for GpsCorrelationTimestamp {
+        const SET_DESCRIPTOR: u8 = 0x80;
+        const DATA_DESCRIPTOR: u8 = 0x12;
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl ::core::fmt::Debug for GpsCorrelationTimestamp {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            match *self {
+                GpsCorrelationTimestamp {
+                    tow: ref __self_0_0,
+                    week: ref __self_0_1,
+                    flags: ref __self_0_2,
+                } => {
+                    let debug_trait_builder =
+                        &mut ::core::fmt::Formatter::debug_struct(f, "GpsCorrelationTimestamp");
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "tow",
+                        &&(*__self_0_0),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "week",
+                        &&(*__self_0_1),
+                    );
+                    let _ = ::core::fmt::DebugStruct::field(
+                        debug_trait_builder,
+                        "flags",
+                        &&(*__self_0_2),
+                    );
+                    ::core::fmt::DebugStruct::finish(debug_trait_builder)
+                }
+            }
+        }
+    }
+    #[doc(hidden)]
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl _serde::Serialize for GpsCorrelationTimestamp {
+            fn serialize<__S>(
+                &self,
+                __serializer: __S,
+            ) -> _serde::__private::Result<__S::Ok, __S::Error>
+            where
+                __S: _serde::Serializer,
+            {
+                let mut __serde_state = match _serde::Serializer::serialize_struct(
+                    __serializer,
+                    "GpsCorrelationTimestamp",
+                    false as usize + 1 + 1 + 1,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "tow",
+                    &self.tow,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "week",
+                    &self.week,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                match _serde::ser::SerializeStruct::serialize_field(
+                    &mut __serde_state,
+                    "flags",
+                    &self.flags,
+                ) {
+                    _serde::__private::Ok(__val) => __val,
+                    _serde::__private::Err(__err) => {
+                        return _serde::__private::Err(__err);
+                    }
+                };
+                _serde::ser::SerializeStruct::end(__serde_state)
+            }
+        }
+    };
+}

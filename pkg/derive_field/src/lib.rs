@@ -2,9 +2,8 @@ extern crate proc_macro;
 
 use proc_macro::TokenStream;
 use quote::{quote};
-use syn::{parse_macro_input, DeriveInput, parse_quote};
+use syn::{DeriveInput, parse_macro_input, parse_quote};
 use proc_macro_roids::{DeriveInputStructExt, FieldExt, namespace_parameters};
-
 
 #[proc_macro_derive(FieldExtract, attributes(descriptor))]
 pub fn derive_field(input: TokenStream) -> TokenStream {
@@ -29,20 +28,17 @@ pub fn derive_field(input: TokenStream) -> TokenStream {
     let set_desc = &params[0];
     let data_desc = &params[1];
 
-    
-
-
     // Build the output, possibly using quasi-quotation
     let expanded = quote! {
         impl #struct_name {
-            const OFFSETS: &'static [usize ; #fields_count] = &{
+            pub const OFFSETS: &'static [usize ; #fields_count] = &{
                 let sizes = [
                     #(
                         std::mem::size_of::<#types>()
                     ,)*
                 ];
 
-                let mut out = [2 ; #fields_count];
+                let mut out = [0 ; #fields_count];
                 let mut index = 1;
                 while index < #fields_count {
                    out[index] = out[index - 1] + sizes[index - 1];
@@ -52,7 +48,7 @@ pub fn derive_field(input: TokenStream) -> TokenStream {
             };
 
 
-            fn new(field: packet::RawField) -> anyhow::Result<Self> {
+            pub fn new(field: &packet::RawField) -> anyhow::Result<Self> {
                 Ok(Self {
                     #(
                         #names: field.extract::<#types>(#struct_name::OFFSETS[#indexs])?
@@ -65,7 +61,7 @@ pub fn derive_field(input: TokenStream) -> TokenStream {
             type Error = anyhow::Error;
 
             fn try_from(field: packet::RawField) -> anyhow::Result<Self> {
-                Self::new(field)
+                Self::new(&field)
             }
         }
 
@@ -79,4 +75,44 @@ pub fn derive_field(input: TokenStream) -> TokenStream {
     TokenStream::from(expanded)
 }
 
+#[proc_macro_derive(DataPacket)]
+pub fn derive_packet(input: TokenStream) -> TokenStream {
+    // Parse the input tokens into a syntax tree
+    let input = parse_macro_input!(input as DeriveInput);
+    let fields = input.fields();
+    let struct_name = input.ident.clone();
 
+    let mut names = vec![];
+    let mut inner_types = vec![];
+
+    for field in fields.iter() {
+        names.push(&field.ident);
+
+         if let syn::Type::Path(tp) = &field.ty {
+            if let syn::PathArguments::AngleBracketed(ab) = &tp.path.segments[0].arguments {
+                inner_types.push(ab.args[0].clone());
+            }
+        }
+    }
+
+
+    let expanded = quote! {
+        impl #struct_name {
+            pub fn from_vec(fields: &Vec<RawField>) -> Self {
+                let mut field_map = std::collections::HashMap::new();
+
+                for field in fields {
+                    field_map.insert(field.descriptor, field);
+                }
+
+                Self {
+                    #(
+                        #names: field_map.get(&#inner_types::DATA_DESCRIPTOR).and_then(|f| #inner_types::new(f).ok())
+                    ,)*
+                }
+            }
+        }
+    };
+
+    TokenStream::from(expanded)
+}
