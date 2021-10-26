@@ -5,8 +5,28 @@ use packet::RawField;
 use packet::Field;
 
 enum DataPacket {
+    BASE(),
+    DM(),
+    ESTIMATION(),
+    SYSTEM(),
     IMU(imu_data::ImuPacket),
-    GNSS(gnss_data::GnssPacket)
+    GNSS(gnss_data::GnssPacket),
+    FILTER()
+}
+
+impl DataPacket {
+    fn new(packet: packet::Packet) -> Self {
+        match packet.header.descriptor {
+            0x80 => Self::IMU(imu_data::ImuPacket::from_vec(&packet.payload.fields)),
+            0x81 => Self::GNSS(gnss_data::GnssPacket::from_vec(&packet.payload.fields)),
+            0x82 => Self::FILTER(),
+            0x01 => Self::BASE(),
+            0x0C => Self::DM(),
+            0x0D => Self::DM(),
+            0x7F => Self::SYSTEM(),
+            _ => panic!("Not a data packet")
+        }
+    }
 }
 mod imu_data {
     use super::*;
