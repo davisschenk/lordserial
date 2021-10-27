@@ -182,7 +182,7 @@ mod gnss_data {
         hae: f64,
         msl: f64,
         horizontal_accuracy: f32,
-        vertical_accuract: f32,
+        vertical_accuracy: f32,
         flags: u16
     }
 
