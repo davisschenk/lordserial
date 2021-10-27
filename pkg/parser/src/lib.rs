@@ -1,5 +1,5 @@
 use ringbuf::RingBuffer;
-use packet::{Packet, PacketComponent};
+use packet::{RawPacket, PacketComponent};
 use serialport::SerialPort;
 
 enum State {
@@ -12,7 +12,7 @@ enum State {
 
 pub struct LordParser<F>
 where
-    F: Fn(Packet),
+    F: Fn(RawPacket),
 {
     reader: Box<dyn SerialPort>,
     handler: F,
@@ -20,7 +20,7 @@ where
 
 impl<F> LordParser<F>
 where
-    F: Fn(Packet),
+    F: Fn(RawPacket),
 {
     pub fn new(reader: Box<dyn SerialPort>, handler: F) -> Self {
         Self {
@@ -65,7 +65,7 @@ where
             }
 
             if !current_packet.is_empty() {
-                let packet = match Packet::from_bytes(&current_packet) {
+                let packet = match RawPacket::from_bytes(&current_packet) {
                     Ok(packet) => packet,
                     Err(_) => {
                         continue;
