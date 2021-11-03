@@ -1,29 +1,31 @@
 #![allow(dead_code)]
 use derive_field::{FieldExtract, DataPacket};
-use serde::Serialize;
+use serde::{self, Serialize};
 use packet::RawField;
 use packet::Field;
 
-enum Packet {
-    BASE(),
-    DM(),
-    ESTIMATION(),
-    SYSTEM(),
+#[derive(Serialize)]
+#[serde(tag="type")]
+pub enum Packet {
+    BASE {},
+    DM {},
+    ESTIMATION {},
+    SYSTEM {},
     IMU(imu_data::ImuPacket),
     GNSS(gnss_data::GnssPacket),
-    FILTER()
+    FILTER{}
 }
 
 impl Packet {
-    fn new(packet: packet::RawPacket) -> Self {
+    pub fn new(packet: &packet::RawPacket) -> Self {
         match packet.header.descriptor {
             0x80 => Self::IMU(imu_data::ImuPacket::from_vec(&packet.payload.fields)),
             0x81 => Self::GNSS(gnss_data::GnssPacket::from_vec(&packet.payload.fields)),
-            0x82 => Self::FILTER(),
-            0x01 => Self::BASE(),
-            0x0C => Self::DM(),
-            0x0D => Self::DM(),
-            0x7F => Self::SYSTEM(),
+            0x82 => Self::FILTER {},
+            0x01 => Self::BASE {},
+            0x0C => Self::DM {},
+            0x0D => Self::ESTIMATION {},
+            0x7F => Self::SYSTEM {},
             _ => panic!("Not a data packet")
         }
     }
@@ -33,17 +35,40 @@ mod imu_data {
 
     #[derive(DataPacket, Debug, Serialize)]
     pub struct ImuPacket {
+        #[serde(skip_serializing_if = "Option::is_none")]
         accelerometer: Option<ScaledAccelerometerVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         gyro: Option<ScaledGyroVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         magnetometer: Option<ScaledMagnetometerVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         pressure: Option<ScaledAmbientPressure>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         dtv: Option<DeltaThetaVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         dvv: Option<DeltaVelocityVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         orientation_matrix: Option<OrientationMatrix>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         quaternion: Option<Quaternion>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         euler_angles:  Option<EulerAngles>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         north_vector: Option<StabilizedNorthVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         up_vector: Option<StabilizedUpVector>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         gps_correlation: Option<GpsCorrelationTimestamp>,
     }
 
@@ -159,18 +184,43 @@ mod gnss_data {
 
     #[derive(DataPacket, Debug, Serialize)]
     pub struct GnssPacket {
+        #[serde(skip_serializing_if = "Option::is_none")]
         llh: Option<LlhPosition>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         ecef_position: Option<EcefPosition>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         ned_velocity: Option<NedVelocity>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         ecef_velocity: Option<EcefVelocity>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         dop_data: Option<DopData>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         utc_time: Option<UtcTime>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         gps_time: Option<GpsTime>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         clock_information: Option<ClockInformation>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         fix_information: Option<FixInformation>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         sv_information: Option<SpaceVehicleInformation>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         hardware_status: Option<HardwareStatus>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         dgnss_information: Option<DgnssInformation>,
+
+        #[serde(skip_serializing_if = "Option::is_none")]
         dgnss_status: Option<DgnssStatus>,
     }
 
