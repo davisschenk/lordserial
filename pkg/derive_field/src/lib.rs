@@ -1,9 +1,9 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-use quote::{quote};
-use syn::{DeriveInput, parse_macro_input, parse_quote};
-use proc_macro_roids::{DeriveInputStructExt, FieldExt, namespace_parameters};
+use proc_macro_roids::{namespace_parameters, DeriveInputStructExt, FieldExt};
+use quote::quote;
+use syn::{parse_macro_input, parse_quote, DeriveInput};
 
 #[proc_macro_derive(FieldExtract, attributes(descriptor))]
 pub fn derive_field(input: TokenStream) -> TokenStream {
@@ -16,14 +16,13 @@ pub fn derive_field(input: TokenStream) -> TokenStream {
     let mut names = Vec::new();
     let mut types = Vec::new();
     let mut indexs = Vec::new();
-    
+
     for (index, field) in fields.iter().enumerate() {
         names.push(field.ident.clone());
         types.push(field.type_name());
         indexs.push(index);
     }
 
-    
     let params = namespace_parameters(&input.attrs, &parse_quote!(descriptor));
     let set_desc = &params[0];
     let data_desc = &params[1];
@@ -88,13 +87,12 @@ pub fn derive_packet(input: TokenStream) -> TokenStream {
     for field in fields.iter() {
         names.push(&field.ident);
 
-         if let syn::Type::Path(tp) = &field.ty {
+        if let syn::Type::Path(tp) = &field.ty {
             if let syn::PathArguments::AngleBracketed(ab) = &tp.path.segments[0].arguments {
                 inner_types.push(ab.args[0].clone());
             }
         }
     }
-
 
     let expanded = quote! {
         impl #struct_name {

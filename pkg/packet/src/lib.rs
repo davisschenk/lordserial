@@ -1,10 +1,12 @@
 use anyhow::Result;
-use error::ParsingError;
 use desert::FromBytesBE;
+use error::ParsingError;
 
 pub trait PacketComponent {
     fn to_bytes(&self) -> Result<Vec<u8>>;
-    fn from_bytes(bytes: &[u8]) -> Result<Self> where Self: Sized;
+    fn from_bytes(bytes: &[u8]) -> Result<Self>
+    where
+        Self: Sized;
 }
 
 #[derive(Debug)]
@@ -24,7 +26,8 @@ impl PacketComponent for Header {
             return Err(ParsingError::SrcInsufficent {
                 required: 3,
                 provided: bytes.len(),
-            }.into());
+            }
+            .into());
         }
 
         Ok(Self {
@@ -50,11 +53,11 @@ pub struct RawField {
 impl PacketComponent for RawField {
     fn to_bytes(&self) -> Result<Vec<u8>> {
         let mut v = vec![self.length, self.descriptor];
-        
+
         for i in &self.data {
             v.push(*i);
         }
-        
+
         Ok(v)
     }
 
@@ -67,7 +70,8 @@ impl PacketComponent for RawField {
             return Err(ParsingError::SrcInsufficent {
                 required: length,
                 provided: bytes.len(),
-            }.into());
+            }
+            .into());
         }
 
         Ok(Self {
@@ -78,9 +82,10 @@ impl PacketComponent for RawField {
     }
 }
 
-impl RawField {    
+impl RawField {
     pub fn extract<T: FromBytesBE>(&self, offset: usize) -> Result<T> {
-        let (_, num) = T::from_bytes_be(&self.data[offset..]).map_err(|_| ParsingError::BadChecksum)?;
+        let (_, num) =
+            T::from_bytes_be(&self.data[offset..]).map_err(|_| ParsingError::BadChecksum)?;
         Ok(num)
     }
 }
@@ -109,7 +114,7 @@ impl PacketComponent for Payload {
 
         while offset < length {
             let field_length = bytes[offset] as usize;
-            let field = RawField::from_bytes(&bytes[offset..(offset+field_length)])?;
+            let field = RawField::from_bytes(&bytes[offset..(offset + field_length)])?;
 
             fields.push(field);
             offset += field_length;
@@ -117,12 +122,10 @@ impl PacketComponent for Payload {
 
         Ok(Self {
             length: bytes[0],
-            fields
+            fields,
         })
-
     }
 }
-
 
 #[derive(Debug)]
 pub struct Checksum {
@@ -140,7 +143,8 @@ impl PacketComponent for Checksum {
             return Err(ParsingError::SrcInsufficent {
                 required: 2,
                 provided: bytes.len(),
-            }.into());
+            }
+            .into());
         }
 
         Ok(Self {
@@ -168,7 +172,7 @@ impl Checksum {
 pub struct RawPacket {
     pub header: Header,
     pub payload: Payload,
-    pub checksum: Checksum
+    pub checksum: Checksum,
 }
 
 impl PacketComponent for RawPacket {
@@ -180,7 +184,6 @@ impl PacketComponent for RawPacket {
         bytes.append(&mut self.checksum.to_bytes()?);
 
         Ok(bytes)
-
     }
 
     fn from_bytes(bytes: &[u8]) -> Result<Self> {
@@ -190,26 +193,34 @@ impl PacketComponent for RawPacket {
             return Err(ParsingError::BadChecksum.into());
         }
 
-
         let header = Header::from_bytes(&bytes[..3])?;
         let payload = Payload::from_bytes(&bytes[3..bytes.len() - 2])?;
 
         Ok(Self {
             header,
             payload,
-            checksum
+            checksum,
         })
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{RawPacket, PacketComponent};
+    use super::{PacketComponent, RawPacket};
 
     #[test]
     fn test_packet() {
-        let v = vec![0x75, 0x65, 0x80, 0x5E, 0x0E, 0x12, 0x40, 0x67, 0xD2, 0x7E, 0xF9, 0xDB, 0x22, 0xD1, 0x00, 0x00, 0x00, 0x06, 0x12, 0x0A, 0x3C, 0xB5, 0x86, 0xAA, 0x3D, 0xBE, 0xB0, 0x7E, 0x3F, 0x7E, 0xD0, 0x90, 0x3C, 0x10, 0xE8, 0xAB, 0x0E, 0x0C, 0x40, 0x47, 0xAB, 0x6C, 0x3D, 0x2D, 0xFD, 0xDC, 0x40, 0x3D, 0x17, 0xF4, 0x0E, 0x04, 0x3D, 0x36, 0xFC, 0xEA, 0xBC, 0xBE, 0x8D, 0xC0, 0x3F, 0x7F, 0x96, 0xDC, 0x0E, 0x05, 0x3A, 0x0A, 0x45, 0x73, 0x3A, 0xFB, 0x74, 0x4F, 0x3A, 0x6E, 0x7B, 0x95, 0x0E, 0x06, 0xBE, 0xD5, 0x4B, 0x19, 0x3D, 0x9D, 0x18, 0xC7, 0xBB, 0xE2, 0xCB, 0xE8, 0x06, 0x17, 0x44, 0x53, 0x1B, 0xB8, 0x3D, 0x55];
-        
+        let v = vec![
+            0x75, 0x65, 0x80, 0x5E, 0x0E, 0x12, 0x40, 0x67, 0xD2, 0x7E, 0xF9, 0xDB, 0x22, 0xD1,
+            0x00, 0x00, 0x00, 0x06, 0x12, 0x0A, 0x3C, 0xB5, 0x86, 0xAA, 0x3D, 0xBE, 0xB0, 0x7E,
+            0x3F, 0x7E, 0xD0, 0x90, 0x3C, 0x10, 0xE8, 0xAB, 0x0E, 0x0C, 0x40, 0x47, 0xAB, 0x6C,
+            0x3D, 0x2D, 0xFD, 0xDC, 0x40, 0x3D, 0x17, 0xF4, 0x0E, 0x04, 0x3D, 0x36, 0xFC, 0xEA,
+            0xBC, 0xBE, 0x8D, 0xC0, 0x3F, 0x7F, 0x96, 0xDC, 0x0E, 0x05, 0x3A, 0x0A, 0x45, 0x73,
+            0x3A, 0xFB, 0x74, 0x4F, 0x3A, 0x6E, 0x7B, 0x95, 0x0E, 0x06, 0xBE, 0xD5, 0x4B, 0x19,
+            0x3D, 0x9D, 0x18, 0xC7, 0xBB, 0xE2, 0xCB, 0xE8, 0x06, 0x17, 0x44, 0x53, 0x1B, 0xB8,
+            0x3D, 0x55,
+        ];
+
         assert_eq!(v, RawPacket::from_bytes(&v).unwrap().to_bytes().unwrap());
     }
 }

@@ -1,5 +1,5 @@
+use packet::{PacketComponent, RawPacket};
 use ringbuf::RingBuffer;
-use packet::{RawPacket, PacketComponent};
 use serialport::SerialPort;
 
 enum State {
