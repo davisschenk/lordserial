@@ -1,17 +1,19 @@
 #![allow(dead_code)]
 use derive_field::{FieldExtract, DataPacket};
-use serde::Serialize;
+use serde::{self, Serialize};
 use packet::RawField;
 use packet::Field;
 
+#[derive(Serialize)]
+#[serde(tag="type")]
 pub enum Packet {
-    BASE(),
-    DM(),
-    ESTIMATION(),
-    SYSTEM(),
+    BASE {},
+    DM {},
+    ESTIMATION {},
+    SYSTEM {},
     IMU(imu_data::ImuPacket),
     GNSS(gnss_data::GnssPacket),
-    FILTER()
+    FILTER{}
 }
 
 impl Packet {
@@ -19,11 +21,11 @@ impl Packet {
         match packet.header.descriptor {
             0x80 => Self::IMU(imu_data::ImuPacket::from_vec(&packet.payload.fields)),
             0x81 => Self::GNSS(gnss_data::GnssPacket::from_vec(&packet.payload.fields)),
-            0x82 => Self::FILTER(),
-            0x01 => Self::BASE(),
-            0x0C => Self::DM(),
-            0x0D => Self::DM(),
-            0x7F => Self::SYSTEM(),
+            0x82 => Self::FILTER {},
+            0x01 => Self::BASE {},
+            0x0C => Self::DM {},
+            0x0D => Self::ESTIMATION {},
+            0x7F => Self::SYSTEM {},
             _ => panic!("Not a data packet")
         }
     }
