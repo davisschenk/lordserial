@@ -4,7 +4,7 @@ use packet::Field;
 use packet::RawField;
 use serde::{self, Serialize};
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 #[serde(tag = "type")]
 pub enum Packet {
     BASE {},
@@ -252,7 +252,7 @@ mod gnss_data {
         heading: f32,
         speed_accuracy: f32,
         heading_accuracy: f32,
-        flags: f32,
+        flags: u16,
     }
 
     #[derive(FieldExtract, Debug, Serialize)]
