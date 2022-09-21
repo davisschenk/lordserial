@@ -135,7 +135,7 @@ pub struct Checksum {
 
 impl PacketComponent for Checksum {
     fn to_bytes(&self) -> Result<Vec<u8>> {
-        return Ok(vec![self.msb, self.lsb]);
+        Ok(vec![self.msb, self.lsb])
     }
 
     fn from_bytes(bytes: &[u8]) -> Result<Self> {
@@ -189,7 +189,7 @@ impl PacketComponent for RawPacket {
     fn from_bytes(bytes: &[u8]) -> Result<Self> {
         let checksum = Checksum::from_bytes(&bytes[bytes.len() - 2..])?;
 
-        if !checksum.validate_bytes(&bytes) {
+        if !checksum.validate_bytes(bytes) {
             return Err(ParsingError::BadChecksum.into());
         }
 
