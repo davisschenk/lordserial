@@ -4,7 +4,7 @@ use packet::Field;
 use packet::RawField;
 use serde::{self, Serialize};
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 #[serde(tag = "type")]
 pub enum Packet {
     BASE {},
@@ -13,7 +13,7 @@ pub enum Packet {
     SYSTEM {},
     IMU(imu_data::ImuPacket),
     GNSS(gnss_data::GnssPacket),
-    FILTER {},
+    FILTER(filter_data::FilterPacket),
 }
 
 impl Packet {
@@ -21,7 +21,7 @@ impl Packet {
         match packet.header.descriptor {
             0x80 => Self::IMU(imu_data::ImuPacket::from_vec(&packet.payload.fields)),
             0x81 => Self::GNSS(gnss_data::GnssPacket::from_vec(&packet.payload.fields)),
-            0x82 => Self::FILTER {},
+            0x82 => Self::FILTER(filter_data::FilterPacket::from_vec(&packet.payload.fields)),
             0x01 => Self::BASE {},
             0x0C => Self::DM {},
             0x0D => Self::ESTIMATION {},
@@ -252,7 +252,7 @@ mod gnss_data {
         heading: f32,
         speed_accuracy: f32,
         heading_accuracy: f32,
-        flags: f32,
+        flags: u16,
     }
 
     #[derive(FieldExtract, Debug, Serialize)]
@@ -660,13 +660,15 @@ mod filter_data {
 
     // TODO: Implement more types starting at gravity vector (0x82, 0x13)
 }
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     use packet::*;
-//     #[test]
-//     fn it_works() {
-//         let packet = Packet { header: Header { sync_one: 117, sync_two: 101, descriptor: 128 }, payload: Payload { length: 80, fields: vec![RawField { length: 6, descriptor: 23, data: vec![68, 81, 230, 22] }, RawField { length: 14, descriptor: 6, data: vec![61, 180, 25, 94, 62, 21, 152, 247, 62, 51, 29, 38] }, RawField { length: 14, descriptor: 4, data: vec![190, 22, 213, 242, 190, 232, 25, 3, 191, 96, 111, 155] }, RawField { length: 14, descriptor: 5, data: vec![187, 59, 37, 155, 186, 232, 40, 116, 187, 167, 160, 189] }, RawField { length: 18, descriptor: 10, data: vec![63, 105, 52, 83, 62, 68, 185, 120, 190, 29, 27, 178, 190, 169, 151, 49] }, RawField { length: 14, descriptor: 18, data: vec![64, 165, 30, 214, 4, 24, 147, 117, 0, 0, 0, 6] }] }, checksum: Checksum { msb: 192, lsb: 14 } };
-//         println!("{:?}", imu_data::ImuPacket::from_vec(&packet.payload.fields));
-//     }
-// }
+/*
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use packet::*;
+    #[test]
+    fn it_works() {
+        let packet = Packet { header: Header { sync_one: 117, sync_two: 101, descriptor: 128 }, payload: Payload { length: 80, fields: vec![RawField { length: 6, descriptor: 23, data: vec![68, 81, 230, 22] }, RawField { length: 14, descriptor: 6, data: vec![61, 180, 25, 94, 62, 21, 152, 247, 62, 51, 29, 38] }, RawField { length: 14, descriptor: 4, data: vec![190, 22, 213, 242, 190, 232, 25, 3, 191, 96, 111, 155] }, RawField { length: 14, descriptor: 5, data: vec![187, 59, 37, 155, 186, 232, 40, 116, 187, 167, 160, 189] }, RawField { length: 18, descriptor: 10, data: vec![63, 105, 52, 83, 62, 68, 185, 120, 190, 29, 27, 178, 190, 169, 151, 49] }, RawField { length: 14, descriptor: 18, data: vec![64, 165, 30, 214, 4, 24, 147, 117, 0, 0, 0, 6] }] }, checksum: Checksum { msb: 192, lsb: 14 } };
+        println!("{:?}", imu_data::ImuPacket::from_vec(&packet.payload.fields));
+    }
+}
+*/
